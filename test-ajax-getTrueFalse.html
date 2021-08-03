@@ -1,0 +1,243 @@
+
+
+
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name='keywords' content='cambodia facility guide, create, save, share to SNS, free, hospital, bank, restaurant, tourist area, real estate, public place, etc.'>
+    <meta name='description' content='atkhmer.com is an online media for Cambodia facility guide. Every user can join to create, save, and share to SNS for free. 16 categories; such as hospital, bank, restaurant, tourist areas, real estate, public place, etc.'>
+    <meta name='subject' content='Make It Wonder!'>
+
+    <title>getTrueFalse-test</title>
+    <link rel="stylesheet" type="text/css" href="http://localhost/auction/assets/bootstrap/css/bootstrap.min.css">
+
+ <style type="text/css">
+    body, #wrapper{font-family:'Khmer','Muli', sans-serif}
+</style>
+
+    <link href='https://fonts.googleapis.com/css?family=Khmer' rel='stylesheet' type='text/css'>
+    <link href="http://localhost/auction/assets/css/common.element.css" rel="stylesheet" media="all">
+    <link href="http://localhost/auction/assets/css/customize.css" rel="stylesheet" media="all">
+
+    <link href="http://localhost/auction/assets/image/favicon/site-favicon-new.png" rel="shortcut icon" />
+    <script src="http://localhost/auction/assets/js/default/jquery-2.1.1.min.js"></script>
+
+
+<body class="product-category ltr layout-24">
+<div id="wrapper" class="wrapper-full banners-effect-10">
+
+    <span class="hidden" id="_token" data-value="efa52f53fe9b5c4281c0312b7b4d3c0e"></span>
+
+    <div class="breadcrumbs ">
+        <div class="container">
+            <div class="current-name">
+                Search
+            </div>
+            <ul class="breadcrumb">
+                <li><a href="/realestate"><i class="fa fa-home fa-fw" aria-hidden="true"></i>Home</a></li>            <li><a href="search"><i class="fa fa-search" aria-hidden="true"></i>Search</a></li>
+                <li class="active">vehicle</li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="container product-listing content-main ">
+        <div class="row">
+
+
+            <div class="col-md-10 offset-md-1">
+                <h4>Ajax-showTrueFalse</h4>
+              <h1 id="showTrueFalse">True-False</h1>
+            </div>
+
+            <div class="col-md-10 offset-md-1">
+                <h4>showTrueFalseCallback</h4>
+                <h1 id="showTrueFalseCallback">True-False</h1>
+            </div>
+
+
+            <div class="col-md-10 offset-md-1">
+                <h4>showTrueFalsePlugin</h4>
+                <h1 id="showTrueFalsePlugin">True-False</h1>
+            </div>
+
+            <div class="col-md-10 offset-md-1">
+                <h4>showTrueFalsePlugin2</h4>
+                <h1 id="showTrueFalsePlugin2">True-False</h1>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+    <script>
+
+        (function($){
+            $.fn.checkTrueFalsePlugin2 = function(options) {
+
+                var settings = $.extend({
+                    isExisted: function() {}, // Callback function is empty by default
+                    isNotExisted: function() {} // Callback function is empty by default
+                }, options );
+
+                if ($.isFunction(settings.isExisted) && $.isFunction(settings.isNotExisted)) {
+                    $.ajax({
+                        url:"https://localhost/auction/helper/ajax/ajaxGetTrueFalse",
+                        type: "POST",
+                        dataType: "json",
+                        crossDomain: true
+                    })
+                    .done(function (response) {
+                        var result = response["result"].toString();
+                        console.log("ajax-checkTrueFalsePlugin2:" + result);
+                        if(result == "1"){
+                            $("#showTrueFalse").html("True");
+                            settings.isExisted.call();
+                        }else{
+                            settings.isNotExisted.call();
+                        }
+                    })
+                    .fail(function () {
+                            settings.isNotExisted.call();
+                    });
+
+                }
+            };
+        })(jQuery);
+
+
+        (function($){
+            $.fn.checkTrueFalsePlugin = function(options) {
+                var callback = options.callback;
+                if ($.isFunction(callback)) {
+
+
+                    $.ajax({
+                        url:"https://localhost/auction/helper/ajax/ajaxGetTrueFalse",
+                        type: "POST",
+                        dataType: "json",
+                        crossDomain: true
+                    })
+                            .done(function (response) {
+                                var result = response["result"].toString();
+                                console.log("ajax-result:" + result);
+                                if(result == "1"){
+                                    $("#showTrueFalse").html("True");
+                                }else{
+                                    $("#showTrueFalse").html("False");
+                                }
+                                callback.call(this, result);
+                            })
+                            .fail(function () {
+                                callback.call(this, "2");
+                            });
+
+                }
+            };
+        })(jQuery);
+
+
+        $(document).ready(function() {
+
+            /*
+            $("#showTrueFalsePlugin").checkTrueFalsePlugin({
+
+                callback:function(result){
+
+                    if(result == "1"){
+                        $("#showTrueFalsePlugin").html("plugin-True");
+                    }else if(result == "0"){
+                        $("#showTrueFalsePlugin").html("plugin-false");
+                    }
+                    else{
+                        $("#showTrueFalsePlugin").html("plugin-error");
+                    }
+                }
+            });
+*/
+
+            $("#showTrueFalsePlugin2").checkTrueFalsePlugin2({
+
+                isNotExisted:function(){
+                    $("#showTrueFalsePlugin2").html("plugin-false");
+                },
+
+                isExisted:function(){
+                    $("#showTrueFalsePlugin2").html("plugin-True");
+                }
+            });
+
+
+            /*
+            checkTrueFalse = function(result){
+                if(result == "1"){
+                    $("#showTrueFalseCallback").html("callback-True");
+                }else if(result == "0"){
+                    $("#showTrueFalseCallback").html("callback-false");
+                }
+                else{
+                    $("#showTrueFalseCallback").html("callback-error");
+                }
+            };
+            */
+
+            /*
+            $.ajax({
+                url:"https://localhost/auction/helper/ajax/ajaxGetTrueFalse",
+                type: "POST",
+                dataType: "json",
+                crossDomain: true
+            })
+                .done(function (response) {
+                        console.log(response);
+                    var result = response["result"].toString();
+                    if(result == "1"){
+                        $("#showTrueFalse").html("True");
+                    }else{
+                        $("#showTrueFalse").html("False");
+                    }
+                })
+                .fail(function () {
+                        $("#showTrueFalse").html("Error");
+                });
+            */
+
+            function checkTrueFalse(callback) {
+
+                $.ajax({
+                    url:"https://localhost/auction/helper/ajax/ajaxGetTrueFalse",
+                    type: "POST",
+                    dataType: "json",
+                    crossDomain: true
+                })
+                .done(function (response) {
+                    var result = response["result"].toString();
+                    console.log("ajax-result:" + result);
+                    if(result == "1"){
+                        $("#showTrueFalse").html("True");
+                    }else{
+                        $("#showTrueFalse").html("False");
+                    }
+                    callback(result);
+                })
+                .fail(function () {
+                    callback("2");
+                });
+            }
+
+        });
+
+    </script>
+
+
+
+
+
+</div>
+</body>
+</html>
