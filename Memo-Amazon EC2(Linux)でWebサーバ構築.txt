@@ -1,0 +1,26 @@
+<html lang="ja">
+ <head>
+  <meta charset="utf-8">
+  <title>hello aws test</title>
+ </head>
+   <body>
+    <h1>Hello  world!</h1>
+    <br>
+    <h2>Hello my first AWS Page</h2>
+   </body>
+</html>
+
+
+Amazon EC2(Linux)でWebサーバ構築（Apache利用）
+https://qiita.com/u-bayashi/items/ce3ecb3badda60179fab
+
+Elastic IPの設定
+https://qiita.com/Jerid/items/d5dd3a29ed9a0e374493
+
+Amazon EC2 セキュリティグループ
+https://qiita.com/leomaro7/items/42967c080814dfc82139
+
+Freenomの無料ドメインをAWSで登録する方法
+Route53での設定→ Amazonが提供するDNSサービス。
+https://qiita.com/iiiiiiiiih/items/aabe1cd09f368f0bf2b8
+
